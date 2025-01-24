@@ -1,0 +1,28 @@
+---
+- name: zabbix agent
+  hosts: servers_web
+  become: yes
+  vars:
+    zabbix_server: zabbix  #192.168.40.3
+  tasks:
+    - name: install zabbix agent
+      apt:
+        name: zabbix-agent
+        state: present
+
+    - name: log zabbix agent
+      command: mkdir -p /var/log/zabbix/
+
+    - name: chown zabbix agent
+      command: chown zabbix /var/log/zabbix/
+
+    - name: copy zabbix agent conf
+      template:
+        src: /home/xyden/Diplom/ansible-diplom/zabbix_agentd.conf.j2
+        dest: /etc/zabbix/zabbix_agentd.conf
+
+#  handlers:
+    - name: restart zabbix-agent
+      service:
+        name: zabbix-agent
+        state: restarted

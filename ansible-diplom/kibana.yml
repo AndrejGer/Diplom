@@ -1,0 +1,26 @@
+---
+- name: setup Kibana
+  hosts: kibana
+  become: yes
+  vars:
+    elastic_httphost: elastic:9200
+  tasks:
+
+  - name: install kibana
+    apt:
+      deb: "https://mirror.yandex.ru/mirrors/elastic/7/pool/main/k/kibana/kibana-7.15.1-amd64.deb"
+
+  - name: copy kibana conf
+    template:
+      src: /home/xyden/Diplom/ansible-diplom/kibana.j2
+      dest: /etc/kibana/kibana.yml
+
+  - name: daemon_reload
+    systemd:
+      daemon_reload: true
+
+  - name:  restart kibana
+    service:
+      name: kibana
+      state: restarted
+      enabled: yes

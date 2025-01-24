@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: andrej
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6dkSgrqfkC1vTXI0surep5sAK+9/yUcWztNT21dujbtjcjW9gmdfy3o8tk8QJwlh3XPm7Hs8Z0RNnfYe5XadD/RrbKRC9wgy9ioIyxGDJiYbQmwbA5SeJVr14dhqEz9kZOsVoIgD4gClg7JJjJfV1RuwxexBtGZNjbZhMXeVlAkuDNxHsF3vriKSgsMjPtajFG9mrGEOd1IMKtK4oThDQbMu30guFm6S5l+cO+0xWyewF6dH1MACIgAbqoEAJ0uUe0Wv8E5oYf0AKsCw/GNtds9EivI6lyF0IhExfFLPCzfqY7W8Ry0CtRDhYhThrsw1FIoRCg6aPxi4HimnqdCkgkBoCkLhKHl2Xwie+w7RAIvfu/HLm8Sy+d9bGFL/uorcpBAfBT85pusnMPsNLE5vgwSEvWGfbXcfd0vMy+LGxA3JqWVRnaJ3e5Ls/hKRwqk1cODdcRnaRWXkhiLiQ72p6slPlGHjCS2jgNLc6vY7hA2bpquQtXrM8CBKUwvKiwKk= xyden@netology

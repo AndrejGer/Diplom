@@ -1,0 +1,32 @@
+---
+- name: setup elastic
+  hosts: elastic
+  become: yes
+  gather_facts: true
+
+  tasks:
+  - name: update
+    apt:
+      update_cache: yes
+
+  - name: install elasticsearch
+    apt:
+      deb: "https://mirror.yandex.ru/mirrors/elastic/7/pool/main/e/elasticsearch/elasticsearch-7.15.1-amd64.deb"
+      state: present
+
+  - name: copy elasticsearch conf
+    copy:
+      src: /home/xyden/Diplom/ansible-diplom/elastic_conf.yml
+      dest: /etc/elasticsearch/elasticsearch.yml
+
+  - name: daemon_reload
+    systemd:
+      daemon_reload: true
+
+  - name: start elastic
+    service:
+      name: elasticsearch
+      state: started
+      enabled: yes
+
+
