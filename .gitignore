@@ -1,4 +1,4 @@
-terraform-diplom/.terraform
+Diplom/terraform-diplom/.terraform
 terraform-diplom/.terraform.lock.hcl
 terraform-diplom/terraform.tfstate
 terraform-diplom/terraform.tfstate.backup
