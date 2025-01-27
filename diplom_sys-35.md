@@ -76,7 +76,7 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 Описание облачной сети [network.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/network.tf) 
 
-Описание выходных данных ресурсов [outputs.tf](hhttps://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/outputs.tf) 
+Описание выходных данных ресурсов [outputs.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/outputs.tf) 
 
 Список используемых провайдеров [providers.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/providers.tf)
 
@@ -139,19 +139,6 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 
 На втором этапе для установки и настройки всех сервисов используется **Ansible**.
-
-#### Созданы плейбуки и конфигурационные файлы
-
-
-
-Индексный файл веб-сервера [index.html](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/index.html.j2)
-
-
-
-
-
-
-
 
 Подключение ansible к серверам через bastion host реализовано с помощью ProxyCommand  
 `ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q andrej@bastion"'`
