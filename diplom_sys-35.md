@@ -72,6 +72,21 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 На первом этапе работы для развертывания инфраструктуры в Yandex Cloud используется **terraform**. 
 
+#### Созданы файлы конфигурации инфраструктуры
+
+Описание облачной сети [network.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/network.tf) 
+
+Описание выходных данных ресурсов [outputs.tf](hhttps://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/outputs.tf) 
+
+Список используемых провайдеров [providers.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/providers.tf)
+
+Конфигурация созданных ресурсов [resources.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/resources.tf)
+
+Конфигурация security groups [security.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/security.tf)
+
+Создание снапшотов [snapshots.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/snapshots.tf)
+
+
 Запускаем процесс поднятия инфраструктуры командой `terraform apply`, выводится список ip адресов и fqdn имён всех виртуальных машин.
 
 ![1](https://github.com/AndrejGer/Diplom/blob/main/img/1.png)
@@ -122,12 +137,26 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 ![12](https://github.com/AndrejGer/Diplom/blob/main/img/12.png)
 
 
+
 На втором этапе для установки и настройки всех сервисов используется **Ansible**.
+
+#### Созданы плейбуки и конфигурационные файлы
+
+
+
+Индексный файл веб-сервера [index.html](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/index.html.j2)
+
+
+
+
+
+
+
 
 Подключение ansible к серверам через bastion host реализовано с помощью ProxyCommand  
 `ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q andrej@bastion"'`
 
-Содержимое файла inventory.ini, используются fqdn имена виртуальных машин
+Содержимое файла управления узлами [inventory.ini](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/inventory.ini), используются fqdn имена виртуальных машин
 
 ![13](https://github.com/AndrejGer/Diplom/blob/main/img/13.png)
 
@@ -140,7 +169,7 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![14](https://github.com/AndrejGer/Diplom/blob/main/img/ping1.png)
 
-Дополнительно проверяем доступ к хостам через ping.yml
+Дополнительно проверяем доступ к хостам через [ping.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/ping.yml)
 
 ![14](https://github.com/AndrejGer/Diplom/blob/main/img/ping2.png)
 
@@ -148,7 +177,7 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 #### Установка NGINX
 
-запускаем playbook nginx.yml
+запускаем playbook [nginx.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/nginx.yml)
 
 ![nginx](https://github.com/AndrejGer/Diplom/blob/main/img/nginx.png)
 
@@ -168,15 +197,18 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ### Стек ELK для сбора логов
 
-#### Установка Kibana Kibana.yml
+Установка Kibana [kibana.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/kibana.yml)
+Фаил конфигурации [kibana.j2](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/kibana.j2)
 
 ![18](https://github.com/AndrejGer/Diplom/blob/main/img/kibana.png)
 
-#### Установка Filebeat Filebeat.yml
+Установка Kibana [filebeat.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/filebeat.yml)
+Фаил конфигурации [kibana.j2](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/kibana.j2)
 
 ![18](https://github.com/AndrejGer/Diplom/blob/main/img/filebeat.png)
 
-#### Установка Elasticsearch Elastic.yml
+Установка Elasticsearch [elastic.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/elastic.yml)
+Фаил конфигурации [elastic_conf.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/elastic_conf.yml)
 
 ![18](https://github.com/AndrejGer/Diplom/blob/main/img/elastic.png)
 
@@ -200,11 +232,13 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 
 ### Мониторинг
 
-#### Установка zabbix-server, базы данных PostgreSQL и других зависимоcтей Zabbix.yml
+Установка zabbix-server, базы данных PostgreSQL и других зависимоcтей [Zabbix.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/zabbix.yml)
 
 ![zabbix-server](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-server.png)
 
-#### Установка Zabbix-agent на web сервера Zabbix-agent.yml
+Установка Zabbix-agent на web сервера [Zabbix_agent.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/zabbix_agent.yml)
+
+Фаил конфигурации [zabbix_agentd.conf.j2](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/zabbix_agentd.conf.j2)
 
 ![zabbix-agent](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-agent.png)
 
