@@ -100,8 +100,6 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![7](https://github.com/AndrejGer/Diplom/blob/main/img/7.png)
 
-![8](https://github.com/AndrejGer/Diplom/blob/main/img/8.png)
-
 ![9](https://github.com/AndrejGer/Diplom/blob/main/img/9.png)
 
 ### Сеть
@@ -137,7 +135,8 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![14](https://github.com/AndrejGer/Diplom/blob/main/img/14.png)
 
-Проверяем доступность всех хостов с помощью Ansible ping ansible all -m ping
+Проверяем доступность всех хостов с помощью Ansible ping   
+`ansible all -m ping`
 
 ![14](https://github.com/AndrejGer/Diplom/blob/main/img/ping1.png)
 
@@ -185,7 +184,6 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ```
 ssh -J andrej@158.160.147.238 andrej@elastic  
-
 curl -X GET 'localhost:9200/_cluster/health?pretty'
 ```
 
@@ -202,7 +200,7 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 
 ### Мониторинг
 
-#### Установка zabbix-server, базы данных PostgreSQL и других зависимочтей Zabbix.yml
+#### Установка zabbix-server, базы данных PostgreSQL и других зависимоcтей Zabbix.yml
 
 ![zabbix-server](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-server.png)
 
@@ -210,7 +208,9 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 
 ![zabbix-agent](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-agent.png)
 
-#### Zabbix-server доступен по http://158.160.138.120/zabbix/ 	Username: Admin   Password: zabbix
+#### Zabbix-server доступен по http://158.160.138.120/zabbix/ 	
+#### Username: Admin     
+#### Password: zabbix
 
 Доступность zabbix-агентов
 
