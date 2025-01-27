@@ -2,7 +2,7 @@
 variable "cloud" {
   type = map
   default = {
-  "token" = ""
+  "token" = "y0_AgAAAAAM1fCDAATuwQAAAAEQf4s6AAAyt8bSqcVPyJKFaPpBAs3nZ82mQw"
   "cloud_id" = "b1g7e77kb9vgi8k8mbvgS"
   "folder_id" = "b1g7rtd16au0omj9id7e"
   }

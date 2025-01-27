@@ -14,7 +14,7 @@ resource "yandex_compute_instance" "vm1" {
     memory = 4
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {
@@ -51,7 +51,7 @@ resource "yandex_compute_instance" "vm2" {
     memory = 4
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {
@@ -85,7 +85,7 @@ resource "yandex_compute_instance" "vm3" {
     memory = 6
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {
@@ -120,7 +120,7 @@ resource "yandex_compute_instance" "vm4" {
     memory = 4
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {
@@ -155,7 +155,7 @@ resource "yandex_compute_instance" "vm5" {
     memory = 4
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {
@@ -191,7 +191,7 @@ resource "yandex_compute_instance" "vm6" {
     memory = 4
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = false
   }
   boot_disk {
     initialize_params {

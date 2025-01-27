@@ -19,7 +19,7 @@
   - name: web site nginx
     copy:
       src: /home/xyden/Diplom/ansible-diplom/index.html.j2
-      dest: /var/www/html/  #index.nginx-debian.html
+      dest: /var/www/html/index.nginx-debian.html
 
   handlers:
     - name: Restart Nginx

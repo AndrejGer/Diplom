@@ -70,3 +70,148 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 # Выполнение работы
 
+На первом этапе работы для развертывания инфраструктуры в Yandex Cloud используется **terraform**. 
+
+Запускаем процесс поднятия инфраструктуры командой `terraform apply`, выводится список ip адресов и fqdn имён всех виртуальных машин.
+
+![1](https://github.com/AndrejGer/Diplom/blob/main/img/1.png)
+
+Проверяем в web консоли Yandex Cloud параметры созданной инфраструктуры
+
+![2](https://github.com/AndrejGer/Diplom/blob/main/img/2.png)
+
+### Application load balancer (Балансировщик нагрузки)
+
+Load Balancer Target Group с созданными машинами nginx1 и nginx2
+
+![3](https://github.com/AndrejGer/Diplom/blob/main/img/3.png)
+
+Создание Backend Group и настройка backends на target group
+
+![4](https://github.com/AndrejGer/Diplom/blob/main/img/4.png)
+
+![5](https://github.com/AndrejGer/Diplom/blob/main/img/5.png)
+
+Создание HTTP router
+
+![6](https://github.com/AndrejGer/Diplom/blob/main/img/6.png)
+
+Создание Application load balancer для распределения трафика на веб-сервера
+
+![7](https://github.com/AndrejGer/Diplom/blob/main/img/7.png)
+
+![8](https://github.com/AndrejGer/Diplom/blob/main/img/8.png)
+
+![9](https://github.com/AndrejGer/Diplom/blob/main/img/9.png)
+
+### Сеть
+
+Создана 1 VPC с публичными и внутренними подсетями, таблицей маршрутизации для доступа к интернету ВМ находящихся внутри сети за
+Бастионом, который будет выступать в роли интернет-шлюза. Сервера web, Elasticsearch находятся в приватной подсети.
+Сервера Zabbix, Kibana, application load balancer - в публичной подсети.
+
+![10](https://github.com/AndrejGer/Diplom/blob/main/img/10.png)
+
+### Security Groups
+Произведена настройка Security Groups соответствующих сервисов на входящий трафик только к нужным портам.
+На ВМ bastion открыт только один порт — ssh
+
+![11](https://github.com/AndrejGer/Diplom/blob/main/img/11.png)
+
+### Резервное копирование
+Созданы snapshot дисков всех ВМ на ежедневное копирование. Время жизни снапшотов - одна неделя.
+
+![12](https://github.com/AndrejGer/Diplom/blob/main/img/12.png)
+
+
+На втором этапе для установки и настройки всех сервисов используется **Ansible**.
+
+Подключение ansible к серверам через bastion host реализовано с помощью ProxyCommand  
+`ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q andrej@bastion"'`
+
+Содержимое файла inventory.ini, используются fqdn имена виртуальных машин
+
+![13](https://github.com/AndrejGer/Diplom/blob/main/img/13.png)
+
+Проверка генерации инвентаря Ansible
+
+![14](https://github.com/AndrejGer/Diplom/blob/main/img/14.png)
+
+Проверяем доступность всех хостов с помощью Ansible ping ansible all -m ping
+
+![14](https://github.com/AndrejGer/Diplom/blob/main/img/ping1.png)
+
+Дополнительно проверяем доступ к хостам через ping.yml
+
+![14](https://github.com/AndrejGer/Diplom/blob/main/img/ping2.png)
+
+### Сайт
+
+#### Установка NGINX
+
+запускаем playbook nginx.yml
+
+![nginx](https://github.com/AndrejGer/Diplom/blob/main/img/nginx.png)
+
+В терминале прорверяем через `curl -v 158.160.143.86:80`
+
+![15](https://github.com/AndrejGer/Diplom/blob/main/img/15.png)
+
+Проверяем доступность сайта в браузере по публичному ip адресу балансировщика
+
+![16](https://github.com/AndrejGer/Diplom/blob/main/img/16.png)
+
+Как видим backend ip меняется с `nginx1 (192.168.10.10)` на `nginx2 (192.168.20.10)`, значит балансировщик распеределяет трафик между веб-серверами.
+
+![17](https://github.com/AndrejGer/Diplom/blob/main/img/17.png)
+
+![18](https://github.com/AndrejGer/Diplom/blob/main/img/18.png)
+
+### Стек ELK для сбора логов
+
+#### Установка Kibana Kibana.yml
+
+![18](https://github.com/AndrejGer/Diplom/blob/main/img/kibana.png)
+
+#### Установка Filebeat Filebeat.yml
+
+![18](https://github.com/AndrejGer/Diplom/blob/main/img/filebeat.png)
+
+#### Установка Elasticsearch Elastic.yml
+
+![18](https://github.com/AndrejGer/Diplom/blob/main/img/elastic.png)
+
+На хосте elasticsearch проверяем работу кластера
+
+```
+ssh -J andrej@158.160.147.238 andrej@elastic  
+
+curl -X GET 'localhost:9200/_cluster/health?pretty'
+```
+
+![19](https://github.com/AndrejGer/Diplom/blob/main/img/19.png)
+
+#### Kibana доступен по http://158.160.138.91:5601/
+
+![20](https://github.com/AndrejGer/Diplom/blob/main/img/20.png)
+
+Проверяем в Kibana что Filebeat доставляет access.log, error.log в Elasticsearch с серверов nginx1 и nginx2
+Как видно логи от обоих веб-серверов приходят
+
+![21](https://github.com/AndrejGer/Diplom/blob/main/img/21.png)
+
+### Мониторинг
+
+#### Установка zabbix-server, базы данных PostgreSQL и других зависимочтей Zabbix.yml
+
+![zabbix-server](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-server.png)
+
+#### Установка Zabbix-agent на web сервера Zabbix-agent.yml
+
+![zabbix-agent](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-agent.png)
+
+#### Zabbix-server доступен по http://158.160.138.120/zabbix/ 	Username: Admin   Password: zabbix
+
+Доступность zabbix-агентов
+
+Настройка дешбордов с отображением метрик
