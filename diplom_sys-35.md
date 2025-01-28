@@ -236,3 +236,6 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 ![23](https://github.com/AndrejGer/Diplom/blob/main/img/23.png)
 
 ![24](https://github.com/AndrejGer/Diplom/blob/main/img/24.png)
+
+
+Отказоустойчивая инфраструктура для сайта разработана и готова к эксплуатации.
