@@ -132,7 +132,7 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 
 
-На втором этапе для установки и настройки всех сервисов используется **Ansible**.
+## На втором этапе для установки и настройки всех сервисов используется **Ansible**.
 
 Подключение ansible к серверам через bastion host реализовано с помощью ProxyCommand  
 `ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q andrej@bastion"'`
@@ -238,4 +238,4 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 ![24](https://github.com/AndrejGer/Diplom/blob/main/img/24.png)
 
 
-Отказоустойчивая инфраструктура для сайта разработана и готова к эксплуатации.
+### Отказоустойчивая инфраструктура для сайта разработана и готова к эксплуатации.
