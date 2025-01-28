@@ -1,4 +1,4 @@
-#  Дипломная работа по профессии «Системный администратор» `Герасимчук Андрей, группа SYS-35`
+#  Дипломная работа по профессии «Системный администратор» Герасимчук Андрей, группа SYS-35
 
 
 Содержание
@@ -70,22 +70,16 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 # Выполнение работы
 
-На первом этапе работы для развертывания инфраструктуры в Yandex Cloud используется **terraform**. 
+На первом этапе работы для развертывания инфраструктуры в Yandex Cloud использую **terraform**. 
 
 #### Созданы файлы конфигурации инфраструктуры
 
-Описание облачной сети [network.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/network.tf) 
-
-Описание выходных данных ресурсов [outputs.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/outputs.tf) 
-
-Список используемых провайдеров [providers.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/providers.tf)
-
-Конфигурация созданных ресурсов [resources.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/resources.tf)
-
-Конфигурация security groups [security.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/security.tf)
-
-Создание снапшотов [snapshots.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/snapshots.tf)
-
+Описание облачной сети [network.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/network.tf)   
+Описание выходных данных ресурсов [outputs.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/outputs.tf)   
+Список используемых провайдеров [providers.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/providers.tf)  
+Конфигурация созданных ресурсов [resources.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/resources.tf)  
+Конфигурация security groups [security.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/security.tf)  
+Создание снапшотов [snapshots.tf](https://github.com/AndrejGer/Diplom/blob/main/terraform-diplom/snapshots.tf)  
 
 Запускаем процесс поднятия инфраструктуры командой `terraform apply`, выводится список ip адресов и fqdn имён всех виртуальных машин.
 
@@ -105,8 +99,6 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![4](https://github.com/AndrejGer/Diplom/blob/main/img/4.png)
 
-![5](https://github.com/AndrejGer/Diplom/blob/main/img/5.png)
-
 Создание HTTP router
 
 ![6](https://github.com/AndrejGer/Diplom/blob/main/img/6.png)
@@ -114,6 +106,8 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 Создание Application load balancer для распределения трафика на веб-сервера
 
 ![7](https://github.com/AndrejGer/Diplom/blob/main/img/7.png)
+
+![5](https://github.com/AndrejGer/Diplom/blob/main/img/5.png)
 
 ![9](https://github.com/AndrejGer/Diplom/blob/main/img/9.png)
 
@@ -147,7 +141,7 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![13](https://github.com/AndrejGer/Diplom/blob/main/img/13.png)
 
-Проверка генерации инвентаря Ansible
+Просмотр генерации инвентаря Ansible
 
 ![14](https://github.com/AndrejGer/Diplom/blob/main/img/14.png)
 
@@ -168,11 +162,11 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![nginx](https://github.com/AndrejGer/Diplom/blob/main/img/nginx.png)
 
-В терминале прорверяем через `curl -v 158.160.143.86:80`
+В терминале прорверяем через `curl -v 51.250.47.233:80`
 
 ![15](https://github.com/AndrejGer/Diplom/blob/main/img/15.png)
 
-Проверяем доступность сайта в браузере по публичному ip адресу балансировщика
+Проверяем доступность сайта в браузере по публичному ip адресу балансировщика `51.250.47.233:80`
 
 ![16](https://github.com/AndrejGer/Diplom/blob/main/img/16.png)
 
@@ -189,8 +183,8 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![18](https://github.com/AndrejGer/Diplom/blob/main/img/kibana.png)
 
-Установка Kibana [filebeat.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/filebeat.yml)
-Фаил конфигурации [kibana.j2](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/kibana.j2)
+Установка filebeat [filebeat.yml](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/filebeat.yml)
+Фаил конфигурации [filebeat.j2](https://github.com/AndrejGer/Diplom/blob/main/ansible-diplom/filebeat.j2)
 
 ![18](https://github.com/AndrejGer/Diplom/blob/main/img/filebeat.png)
 
@@ -202,18 +196,18 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 На хосте elasticsearch проверяем работу кластера
 
 ```
-ssh -J andrej@158.160.147.238 andrej@elastic  
+ssh -J andrej@158.160.133.195 andrej@elastic  
 curl -X GET 'localhost:9200/_cluster/health?pretty'
 ```
 
 ![19](https://github.com/AndrejGer/Diplom/blob/main/img/19.png)
 
-#### Kibana доступен по http://158.160.138.91:5601/
+#### Kibana доступен по http://158.160.135.184:5601/
 
 ![20](https://github.com/AndrejGer/Diplom/blob/main/img/20.png)
 
-Проверяем в Kibana что Filebeat доставляет access.log, error.log в Elasticsearch с серверов nginx1 и nginx2
-Как видно логи от обоих веб-серверов приходят
+Проверяем в Kibana что Filebeat доставляет access.log, error.log в Elasticsearch с серверов nginx1 и nginx2.  
+Как видно логи от обоих веб-серверов приходят.
 
 ![21](https://github.com/AndrejGer/Diplom/blob/main/img/21.png)
 
@@ -229,10 +223,16 @@ curl -X GET 'localhost:9200/_cluster/health?pretty'
 
 ![zabbix-agent](https://github.com/AndrejGer/Diplom/blob/main/img/zabbix-agent.png)
 
-#### Zabbix-server доступен по http://158.160.138.120/zabbix/ 	
+#### Zabbix-server доступен по http://84.252.132.92/zabbix/ 	
 #### Username: Admin     
 #### Password: zabbix
 
 Доступность zabbix-агентов
 
+![22](https://github.com/AndrejGer/Diplom/blob/main/img/22.png)
+
 Настройка дешбордов с отображением метрик
+
+![23](https://github.com/AndrejGer/Diplom/blob/main/img/23.png)
+
+![24](https://github.com/AndrejGer/Diplom/blob/main/img/24.png)
