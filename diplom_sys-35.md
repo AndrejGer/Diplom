@@ -166,7 +166,7 @@ Load Balancer Target Group с созданными машинами nginx1 и ng
 
 ![15](https://github.com/AndrejGer/Diplom/blob/main/img/15.png)
 
-Проверяем доступность сайта в браузере по публичному ip адресу балансировщика `http://51.250.47.233/`
+Проверяем доступность сайта в браузере по публичному ip адресу балансировщика http://51.250.47.233:80/
 
 ![16](https://github.com/AndrejGer/Diplom/blob/main/img/16.png)
 
